@@ -40,9 +40,10 @@ export class CategoriesComponent implements OnInit {
   /************************ Save Dialog  ***********************/
 
   openSaveDialog(): void {
+    // Correction : formulaire vide a chaque nouvel ajout
+    this.newCategorie = { id: 0, label: '' };
     this.displaySaveDialog = true;
   }
-
   openUpdateDialog(categorie: Categorie): void {
     // Set the selected category for update
     this.selectedCategorie = { ...categorie };

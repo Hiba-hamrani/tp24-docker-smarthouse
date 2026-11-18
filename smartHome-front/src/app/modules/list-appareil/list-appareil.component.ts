@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FileUpload} from 'primeng/fileupload';
 import {AppareilsService} from '../../controller/service/appareils.service';
 import {Appareil} from "../../controller/model/Appareil";
 import {Categorie} from "../../controller/model/Categorie";
@@ -15,6 +16,9 @@ export class ListAppareilComponent implements OnInit {
   categories: Categorie[] = [];
 
   newAppareil: Appareil = new Appareil();
+
+  // Reference vers le composant d'upload pour pouvoir vider la photo choisie
+  @ViewChild('photoUpload') photoUpload?: FileUpload;
 
   constructor(private appareilService: AppareilsService, private messageService: MessageService) {
   }
@@ -49,7 +53,19 @@ export class ListAppareilComponent implements OnInit {
 
 
   openSaveDialog(): void {
+    // Correction : on repart d'un formulaire vide a chaque ouverture
+    this.resetForm();
     this.displaySaveDialog = true;
+  }
+
+  closeSaveDialog(): void {
+    this.displaySaveDialog = false;
+    this.resetForm();
+  }
+
+  private resetForm(): void {
+    this.newAppareil = new Appareil();
+    this.photoUpload?.clear();
   }
 
 
@@ -72,7 +88,7 @@ export class ListAppareilComponent implements OnInit {
     this.appareilService.saveAppareil(this.newAppareil).subscribe(
       (response) => {
         this.appareils.unshift({...response})
-        this.displaySaveDialog = false
+        this.closeSaveDialog()
         this.showUpdateToast("Item added successfully ", "success", "done")
       },
       (error) => {
@@ -130,4 +146,3 @@ export class ListAppareilComponent implements OnInit {
 
   protected readonly compareWithIds = compareWithIds;
 }
-

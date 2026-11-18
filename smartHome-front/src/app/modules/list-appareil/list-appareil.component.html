@@ -73,8 +73,7 @@
 
     <div class="p-field m-1">
       <label>Photo</label>
-      <p-fileUpload name="photo" url="your_upload_url" accept="image/*"
-                    (onSelect)="onFileSelect($event)"></p-fileUpload>
+      <p-fileUpload #photoUpload name="photo" url="your_upload_url" accept="image/*"                    (onSelect)="onFileSelect($event)"></p-fileUpload>
     </div>
 
 
@@ -100,6 +99,6 @@
 
   <div class="p-dialog-footer">
     <button pButton label="Save" class="p-button-success" (click)="save()"></button>
-    <button pButton label="Cancel" class="p-button-secondary" (click)="displaySaveDialog = false"></button>
+    <button pButton label="Cancel" class="p-button-secondary" (click)="closeSaveDialog()"></button>
   </div>
 </p-dialog>
